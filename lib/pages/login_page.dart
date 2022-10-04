@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) => Form(
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Image.asset("assets/images/university_seal_120px.png", height: 120),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
