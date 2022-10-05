@@ -12,7 +12,7 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final PageController page_controller = PageController();
+  final PageController pageCtrl = PageController();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -53,8 +53,8 @@ class _StartScreenState extends State<StartScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 64, horizontal: 32),
                       child: PageView(
-                        controller: page_controller,
-                        children: const [LoginPage()],
+                        controller: pageCtrl,
+                        children: [LoginPage(vars: widget.vars)],
                       ),
                     ),
                   ),
