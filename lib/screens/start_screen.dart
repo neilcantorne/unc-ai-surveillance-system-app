@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:unc_ai_surveillance_system_app/app_vars.dart';
 import 'package:unc_ai_surveillance_system_app/pages/login_page.dart';
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+  final AppVars vars;
+
+  const StartScreen({Key? key, required this.vars}) : super(key: key);
 
   @override
   State<StartScreen> createState() => _StartScreenState();
