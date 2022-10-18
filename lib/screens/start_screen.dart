@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:unc_ai_surveillance_system_app/app_vars.dart';
 import 'package:unc_ai_surveillance_system_app/pages/login_page.dart';
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+  final AppVars vars;
+
+  const StartScreen({Key? key, required this.vars}) : super(key: key);
 
   @override
   State<StartScreen> createState() => _StartScreenState();
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final PageController page_controller = PageController();
+  final PageController pageCtrl = PageController();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -50,8 +53,8 @@ class _StartScreenState extends State<StartScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 64, horizontal: 32),
                       child: PageView(
-                        controller: page_controller,
-                        children: const [LoginPage()],
+                        controller: pageCtrl,
+                        children: [LoginPage(vars: widget.vars)],
                       ),
                     ),
                   ),
