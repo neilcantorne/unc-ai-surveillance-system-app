@@ -25,6 +25,20 @@ class User {
         "last-name": lastName,
       };
 
+  static Future<User?> getCurrentUser(AppVariables appVariables) async {
+    final response = await appVariables.httpClient.get("/users/info");
+
+    if (response.statusCode == 200) {
+      return User(
+          id: response.data["id"],
+          username: response.data["id"],
+          firstName: response.data["first-name"],
+          lastName: response.data["last-name"]);
+    }
+
+    return null;
+  }
+
   static Future<void> login(
       {required AppVariables appVariables,
       required String username,
