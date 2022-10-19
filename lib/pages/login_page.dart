@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             username: username,
             password: password)
         .then((_) {
-      Navigator.of(context).pushReplacement(routeToHome(widget.appVariables));
+      // Navigator.of(context).pushReplacement(routeToHome(widget.appVariables));
     }).catchError((err) {
       //TODO: Display error later
     });
