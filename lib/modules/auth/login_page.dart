@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:unc_ai_surveillance_system_app/api/auth/LoginService.dart';
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
+import 'package:unc_ai_surveillance_system_app/models/user.dart';
 
 class LoginPage extends StatefulWidget {
+
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -11,22 +13,30 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
-
   final _formKey = GlobalKey<FormState>();
+  final _username = TextEditingController();
+  final _password = TextEditingController();
 
-  void _onSubmit() {
+  void _onSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
-    Future.delayed(const Duration(seconds: 2),
-        () => {setState(() => _isLoading = false), Modular.to.navigate('/')});
+
+    final AppVariables variables = Modular.get<AppVariables>();
+    await User.login(
+        appVariables: variables,
+        username: _username.text,
+        password: _password.text);
+
+    User? user = await User.getCurrentUser(variables);
+    if (user == null) return;
+
+    setState(() => _isLoading = false);
+    Modular.to.navigate('/');
   }
 
   @override
   Widget build(BuildContext context) {
-    final LoginService service = Modular.get();
-    service.login('username', 'password');
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -83,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                           Column(
                             children: [
                               TextFormField(
+                                  controller: _username,
                                   validator: (value) {
                                     if (!(value == null || value.isEmpty))
                                       return null;
@@ -95,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                                   )),
                               const SizedBox(height: 12),
                               TextFormField(
+                                controller: _password,
                                 autocorrect: false,
                                 obscureText: true,
                                 enableSuggestions: false,

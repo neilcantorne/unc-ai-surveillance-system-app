@@ -1,3 +1,5 @@
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
+
 class User {
   String id;
   String username;
@@ -22,4 +24,38 @@ class User {
         "first-name": firstName,
         "last-name": lastName,
       };
+
+  static Future<User?> getCurrentUser(AppVariables appVariables) async {
+    final response = await appVariables.httpClient.get("/users/info");
+
+    if (response.statusCode == 200) {
+      return User(
+          id: response.data["id"],
+          username: response.data["id"],
+          firstName: response.data["first-name"],
+          lastName: response.data["last-name"]);
+    }
+
+    return null;
+  }
+
+  static Future<void> login(
+      {required AppVariables appVariables,
+      required String username,
+      required String password}) async {
+    final response = await appVariables.httpClient.post("/users/login", data: {
+      "username": username,
+      "password": password,
+      "device-os": appVariables.device.os,
+      "device-name": appVariables.device.name,
+      "device-signature": appVariables.device.signature
+    });
+
+    if (response.statusCode == 200) {
+      final jwt = response.data.toString();
+
+      // Save JSON Web Token to cookies
+      appVariables.httpClient.options.headers['Cookie'] = "jwt=$jwt";
+    }
+  }
 }

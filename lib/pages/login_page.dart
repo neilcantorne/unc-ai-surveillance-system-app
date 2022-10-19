@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:unc_ai_surveillance_system_app/app_vars.dart';
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
+import 'package:unc_ai_surveillance_system_app/routes.dart';
+
+import '../models/user.dart';
 
 class LoginPage extends StatefulWidget {
-  final AppVars vars;
+  final AppVariables appVariables;
 
-  const LoginPage({Key? key, required this.vars}) : super(key: key);
+  const LoginPage({Key? key, required this.appVariables}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -16,17 +19,28 @@ class _LoginPageState extends State<LoginPage> {
   final usernameCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
 
-  void login() {
+  void _login() {
     if (!formKey.currentState!.validate()) {
       return;
     }
 
-    final _username = usernameCtrl.text;
-    final _password = passwordCtrl.text;
+    final username = usernameCtrl.text;
+    final password = passwordCtrl.text;
+
+    User.login(
+            appVariables: widget.appVariables,
+            username: username,
+            password: password)
+        .then((_) {
+      // Navigator.of(context).pushReplacement(routeToHome(widget.appVariables));
+    }).catchError((err) {
+      //TODO: Display error later
+    });
   }
 
   @override
   Widget build(BuildContext context) => Form(
+        key: formKey,
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Image.asset("assets/images/university_seal_120px.png", height: 120),
@@ -34,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
+              controller: usernameCtrl,
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person), hintText: "Username"),
             ),
@@ -41,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
+              controller: passwordCtrl,
               decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.key), hintText: "Password"),
               obscureText: true,
@@ -59,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             height: 40,
             child:
-                ElevatedButton(onPressed: () => {}, child: const Text("Login")),
+                ElevatedButton(onPressed: _login, child: const Text("Login")),
           )
         ]),
       );

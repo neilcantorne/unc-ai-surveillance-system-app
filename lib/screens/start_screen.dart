@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:unc_ai_surveillance_system_app/app_vars.dart';
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
 import 'package:unc_ai_surveillance_system_app/pages/login_page.dart';
 
 class StartScreen extends StatefulWidget {
-  final AppVars vars;
+  final AppVariables appVariables;
 
-  const StartScreen({Key? key, required this.vars}) : super(key: key);
+  const StartScreen({Key? key, required this.appVariables}) : super(key: key);
 
   @override
   State<StartScreen> createState() => _StartScreenState();
@@ -54,7 +54,9 @@ class _StartScreenState extends State<StartScreen> {
                           vertical: 64, horizontal: 32),
                       child: PageView(
                         controller: pageCtrl,
-                        children: [LoginPage(vars: widget.vars)],
+                        children: [
+                          LoginPage(appVariables: widget.appVariables)
+                        ],
                       ),
                     ),
                   ),
