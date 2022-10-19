@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:unc_ai_surveillance_system_app/app_vars.dart';
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
 import 'package:unc_ai_surveillance_system_app/screens/start_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Application());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Application extends StatefulWidget {
+  const Application({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  State<Application> createState() => _ApplicationState();
+}
+
+class _ApplicationState extends State<Application> {
+  static Future<dynamic> _loadVariables() async {
+    try {
+      return await AppVariables.variables;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  MaterialApp _createMaterialApp(
+      BuildContext context, AppVariables appVariables) {
     const primaryColor = Color.fromRGBO(225, 42, 32, 1.0);
     const secondaryColor = Color.fromRGBO(225, 225, 225, 1.0);
     const defaultTextColor = Color.fromRGBO(125, 125, 125, 1.0);
@@ -29,8 +41,6 @@ class MyApp extends StatelessWidget {
             side: const BorderSide(color: Colors.red))),
         padding: MaterialStateProperty.resolveWith(
             (states) => const EdgeInsets.symmetric(vertical: 16)));
-
-    final appVars = AppVars();
 
     return MaterialApp(
       title: 'UNC: COVID-19 Protocols AI Surveillance System',
@@ -62,8 +72,24 @@ class MyApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(style: buttonStyle),
       ),
       home: StartScreen(
-        vars: appVars,
+        appVariables: appVariables,
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext ctx) => FutureBuilder<dynamic>(
+      initialData: null,
+      future: _loadVariables(),
+      builder: (context, snapshot) {
+        if (snapshot.data is String) {
+          return MaterialApp(home: Scaffold(body: Text(snapshot.data)));
+        }
+
+        if (snapshot.data is AppVariables) {
+          return _createMaterialApp(context, snapshot.data);
+        }
+
+        return const SizedBox();
+      });
 }
