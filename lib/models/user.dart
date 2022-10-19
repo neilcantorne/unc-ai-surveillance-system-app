@@ -41,9 +41,7 @@ class User {
       final jwt = response.data.toString();
 
       // Save JSON Web Token to cookies
-      if (appVariables.httpClient.options.headers.containsKey("Cookie")) {
-        appVariables.httpClient.options.headers['Cookie'] = "jwt=$jwt";
-      }
+      appVariables.httpClient.options.headers['Cookie'] = "jwt=$jwt";
     }
   }
 }
