@@ -18,7 +18,7 @@ class _DashboardPageState extends State<DashboardPage>{
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: TextButton(
+        child: ElevatedButton(
           style: ButtonStyle(
             padding: MaterialStateProperty.resolveWith((states) => const EdgeInsets.all(16))
           ),
