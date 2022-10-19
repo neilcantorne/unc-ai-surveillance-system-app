@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:unc_ai_surveillance_system_app/device.dart';
 
-class AppVars {
+class AppVariables {
   final Dio httpClient;
   final Device device;
 
-  AppVars._(this.httpClient, this.device);
+  AppVariables._(this.httpClient, this.device);
 
-  static Future<AppVars> get vars async {
+  static Future<AppVariables> get variables async {
     final options = BaseOptions(
         baseUrl: 'http://127.0.0.1:8080',
         connectTimeout: 5000,
@@ -17,6 +17,6 @@ class AppVars {
     final httpClient = Dio(options);
     final device = await Device.currentDevice;
 
-    return AppVars._(httpClient, device);
+    return AppVariables._(httpClient, device);
   }
 }
