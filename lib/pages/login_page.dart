@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:unc_ai_surveillance_system_app/app_vars.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final AppVars vars;
+
+  const LoginPage({Key? key, required this.vars}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -20,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
 
     final _username = usernameCtrl.text;
     final _password = passwordCtrl.text;
-
-    //TODO: Handle login later
   }
 
   @override
@@ -68,9 +69,9 @@ class ClippingClass extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0.0, size.height-40);
-    path.quadraticBezierTo(size.width / 4, size.height,
-        size.width / 2, size.height);
+    path.lineTo(0.0, size.height - 40);
+    path.quadraticBezierTo(
+        size.width / 4, size.height, size.width / 2, size.height);
     path.quadraticBezierTo(size.width - (size.width / 4), size.height,
         size.width, size.height - 40);
     path.lineTo(size.width, 0.0);
