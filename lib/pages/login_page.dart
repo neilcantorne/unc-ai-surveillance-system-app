@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unc_ai_surveillance_system_app/app_variables.dart';
+import 'package:unc_ai_surveillance_system_app/routes.dart';
 
 import '../models/user.dart';
 
@@ -30,7 +31,9 @@ class _LoginPageState extends State<LoginPage> {
             appVariables: widget.appVariables,
             username: username,
             password: password)
-        .catchError((err) {
+        .then((_) {
+      Navigator.of(context).pushReplacement(routeToHome(widget.appVariables));
+    }).catchError((err) {
       //TODO: Display error later
     });
   }
