@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:unc_ai_surveillance_system_app/app_vars.dart';
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
 
 class LoginPage extends StatefulWidget {
-  final AppVars vars;
+  final AppVariables appVariables;
 
-  const LoginPage({Key? key, required this.vars}) : super(key: key);
+  const LoginPage({Key? key, required this.appVariables}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
