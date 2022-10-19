@@ -46,7 +46,7 @@ class Device {
       final highInt = BigInt.from(xxh3(bytes, seed: 48)).toUnsigned(64);
       final lowInt = BigInt.from(xxh3(bytes, seed: 16)).toUnsigned(64);
 
-      signature = (highInt.toRadixString(32).padLeft(16, '0') +
+      signature = (highInt.toRadixString(16).padLeft(16, '0') +
               lowInt.toRadixString(16).padLeft(16, '0'))
           .toUpperCase();
     }
