@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:unc_ai_surveillance_system_app/app_variables.dart';
 import 'package:unc_ai_surveillance_system_app/layout/dashboard.dart';
 import 'package:unc_ai_surveillance_system_app/pages/login.dart';
+import 'package:unc_ai_surveillance_system_app/pages/report.dart';
 import 'package:unc_ai_surveillance_system_app/pages/security.dart';
 import 'package:unc_ai_surveillance_system_app/pages/tracking.dart';
 import 'package:unc_ai_surveillance_system_app/pages/violator.dart';
@@ -17,6 +18,7 @@ class PageModule extends Module {
   @override
   List<ModularRoute> get routes =>
       [
+        ChildRoute('/report-violator', child: (context, args) => const ReportViolatorPage()),
         ChildRoute(
             '/',
             child: (context, args) => const DashboardLayout(),

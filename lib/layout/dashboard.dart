@@ -22,16 +22,18 @@ class _DashboardLayoutState extends State<DashboardLayout> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    //TODO
     Modular.to.navigate('/violators');
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         elevation: 0,
         title: Image.asset('assets/images/unc_seal.png',
             height: 45),
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+            padding: const EdgeInsets.only(right: 12),
             child: Row(
               children: [
                 IconButton(
