@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:unc_ai_surveillance_system_app/app_variables.dart';
 
 class User {
@@ -26,16 +27,23 @@ class User {
       };
 
   static Future<User?> getCurrentUser(AppVariables appVariables) async {
-    final response = await appVariables.httpClient.get("/users/info");
+    try {
+      final response = await appVariables.httpClient.get("/users/info");
 
-    if (response.statusCode == 200) {
-      return User(
-          id: response.data["id"],
-          username: response.data["id"],
-          firstName: response.data["first-name"],
-          lastName: response.data["last-name"]);
+      if (response.statusCode == 200) {
+        return User(
+            id: response.data["id"],
+            username: response.data["username"],
+            firstName: response.data["first-name"],
+            lastName: response.data["last-name"]);
+      }
+      // ignore: empty_catches
+    } on DioError catch (e) {
+      if (e.error == "Http status error [401]") {
+        return null;
+      }
+      rethrow;
     }
-
     return null;
   }
 
@@ -52,7 +60,7 @@ class User {
     });
 
     if (response.statusCode == 200) {
-      final jwt = response.data.toString();
+      final jwt = response.data['jwt'];
 
       // Save JSON Web Token to cookies
       appVariables.httpClient.options.headers['Cookie'] = "jwt=$jwt";

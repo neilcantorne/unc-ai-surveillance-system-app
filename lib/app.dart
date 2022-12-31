@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:unc_ai_surveillance_system_app/app_variables.dart';
 import 'package:unc_ai_surveillance_system_app/pages/index.dart';
 
 class AppModule extends Module {
+  final AppVariables _variables;
+  AppModule(this._variables);
+
   @override
   List<Bind> get binds => [];
 
   @override
   List<ModularRoute> get routes => [
-        ModuleRoute('/', module: PageModule()),
+        ModuleRoute('/', module: PageModule(_variables)),
       ];
 }
 
@@ -24,21 +28,21 @@ class AppWidget extends StatelessWidget {
     return MaterialApp.router(
       title: 'COVID-19 Protocols AI Surveillance System',
       theme: ThemeData(
-        useMaterial3: true,
-        primaryColor: primaryColor,
-        backgroundColor: secondaryColor,
-        inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100),
+          useMaterial3: true,
+          primaryColor: primaryColor,
+          backgroundColor: secondaryColor,
+          inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
                   borderSide:
                       const BorderSide(width: 0, style: BorderStyle.none)),
-            filled: true,
-            fillColor: secondaryColor,
+              filled: true,
+              fillColor: secondaryColor,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 1),
-            hintStyle: TextStyle(
-                fontSize: Theme.of(context).textTheme.button?.fontSize,
-                fontWeight: FontWeight.w500,
+              hintStyle: TextStyle(
+                  fontSize: Theme.of(context).textTheme.button?.fontSize,
+                  fontWeight: FontWeight.w500,
                   color: defaultTextColor)),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
