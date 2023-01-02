@@ -24,10 +24,11 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    compileSdkVersion 33
+    ndkVersion "22.1.7171670"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -68,4 +69,20 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+cargo {
+    module  = "../../lib/vstream-rs"
+    libname = "vstream-rs"
+    targetIncludes = ["libvstream_rs.so"]
+    targets = ["arm", "arm64", "x86"]
+    prebuiltToolchains = true
+    profile = 'release'
+    apiLevel = 22
+}
+
+tasks.whenTaskAdded { task ->
+    if ((task.name == 'assembleDebug' || task.name == 'assembleRelease')) {
+        task.dependsOn 'cargoBuild'
+    }
 }
