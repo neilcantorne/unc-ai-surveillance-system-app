@@ -1,0 +1,61 @@
+name: Flutter
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: latest
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Set up Android NDK
+        run: |
+          mkdir -p android-ndk
+          cd android-ndk
+          wget https://dl.google.com/android/repository/android-ndk-r22-linux-x86_64.zip
+          unzip android-ndk-r22-linux-x86_64.zip
+      - name: Build and test
+        run: flutter test
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: latest
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Set up Android NDK
+        run: |
+          mkdir -p android-ndk
+          cd android-ndk
+          wget https://dl.google.com/android/repository/android-ndk-r22-linux-x86_64.zip
+          unzip android-ndk-r22-linux-x86_64.zip
+      - name: Build and test
+        run: flutter test
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: latest
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Set up Android NDK
+        run: |
+          mkdir -p android-ndk
+          cd android-ndk
+          wget https://dl.google.com/android/repository/android-ndk-r22-linux-x86_64.zip
+          unzip android-ndk-r22-linux-x86_64.zip
+      - name: Add Android NDK to PATH
+        run: echo "export ANDROID_NDK_HOME=$PWD/android-ndk/android-ndk-r22" >> $GITHUB_ENV
+      - name: Build and test
+        run: flutter test
