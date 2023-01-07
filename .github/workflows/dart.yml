@@ -3,12 +3,13 @@ name: Flutter
 on: [push]
 
 jobs:
-  build:
+  build_linux:
+    name: Build (Linux)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: latest
       - name: Install dependencies
@@ -21,12 +22,13 @@ jobs:
           unzip android-ndk-r22-linux-x86_64.zip
       - name: Build and test
         run: flutter test
-  build-windows:
+  build_windows:
+    name: Build (Windows)
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: latest
       - name: Install dependencies
@@ -39,12 +41,13 @@ jobs:
           unzip android-ndk-r22-linux-x86_64.zip
       - name: Build and test
         run: flutter test
-  build-android:
+  build_android:
+    name: Build (Android)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: latest
       - name: Install dependencies
